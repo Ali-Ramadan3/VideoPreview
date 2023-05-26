@@ -1,6 +1,6 @@
-import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:either_dart/either.dart';
-import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:video_preview/core/presentation/color_manger/colors.dart';
 
 import '../../../../core/error/exceptions.dart';
@@ -9,23 +9,21 @@ import '../../domain/repositories/video_list_repository.dart';
 import '../data_sources/video_list_data_sources.dart';
 import '../models/query_params.dart';
 import '../models/video_list_response.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class VideoListRepositoryImp implements VideoListRepository {
   final VideoListDataSources videoListDataSources;
-  final DataConnectionChecker connectionChecker;
   final Fluttertoast flutterToast;
 
   VideoListRepositoryImp({
     required this.videoListDataSources,
-    required this.connectionChecker,
     required this.flutterToast,
   });
-  @override
+
   @override
   Future<Either<Failure, VideoListResponse>> getMostPopularVideo(
       QueryParams params) async {
-    if (await connectionChecker.hasConnection) {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult != ConnectivityResult.none) {
       try {
         final data = await videoListDataSources.getMostPopularVideo(params);
         return Right(data);

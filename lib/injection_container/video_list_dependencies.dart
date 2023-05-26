@@ -1,7 +1,5 @@
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
-
 import '../core/data/network/network_helper.dart';
 import '../features/main_home/data/data_sources/video_list_data_sources.dart';
 import '../features/main_home/data/repositories/video_list_repositories.dart';
@@ -23,7 +21,6 @@ Future<void> videoListInit(GetIt sl) async {
   // Repository
   sl.registerFactory<VideoListRepository>(() => VideoListRepositoryImp(
         videoListDataSources: sl<VideoListDataSources>(),
-        connectionChecker: DataConnectionChecker(),
         flutterToast: Fluttertoast(),
       ));
 

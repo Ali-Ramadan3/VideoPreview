@@ -52,47 +52,51 @@ class _VideoScreenState extends State<VideoScreen> {
           controller: _controller,
         ),
         builder: (BuildContext, player) {
-          return Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(18.w),
-              child: YoutubePlayer(
-                controller: _controller,
-                showVideoProgressIndicator: true,
-                bottomActions: [
-                  BlocBuilder<PlayVideoCubit, PlayVideoState>(
-                      builder: (context, state) {
-                    if (state is PlayVideoLoaded) {
-                      return IconButton(
-                          onPressed: () {
-                            state.playVideo == false
-                                ? _controller.play()
-                                : _controller.pause();
-                            context.read<PlayVideoCubit>().playVideoIcon();
-                          },
-                          icon: Icon(
-                            (state.playVideo == false)
-                                ? Icons.play_circle_outline
-                                : Icons.pause_circle_outline,
-                            color: ColorManger.white,
-                          ));
-                    } else {
-                      return const SizedBox();
-                    }
-                  }),
-                  CurrentPosition(),
-                  const SizedBox(width: 5.0),
-                  ProgressBar(
-                    isExpanded: true,
+          return Column(
+            children: [
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(18.w),
+                  child: YoutubePlayer(
+                    controller: _controller,
+                    showVideoProgressIndicator: true,
+                    bottomActions: [
+                      BlocBuilder<PlayVideoCubit, PlayVideoState>(
+                          builder: (context, state) {
+                        if (state is PlayVideoLoaded) {
+                          return IconButton(
+                              onPressed: () {
+                                state.playVideo == false
+                                    ? _controller.play()
+                                    : _controller.pause();
+                                context.read<PlayVideoCubit>().playVideoIcon();
+                              },
+                              icon: Icon(
+                                (state.playVideo == false)
+                                    ? Icons.play_circle_outline
+                                    : Icons.pause_circle_outline,
+                                color: ColorManger.white,
+                              ));
+                        } else {
+                          return const SizedBox();
+                        }
+                      }),
+                      CurrentPosition(),
+                      const SizedBox(width: 5.0),
+                      ProgressBar(
+                        isExpanded: true,
+                      ),
+                      FullScreenButton(),
+                    ],
+                    aspectRatio: 4 / 3,
+                    progressIndicatorColor: ColorManger.white,
+                    onReady: () {
+                      print('Player is ready.');
+                    },
                   ),
-                  FullScreenButton(),
-                ],
-                aspectRatio: 4 / 3,
-                progressIndicatorColor: ColorManger.white,
-                onReady: () {
-                  print('Player is ready.');
-                },
+                ),
               ),
-            ),
+            ],
           );
         },
       ),

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:video_preview/features/main_home/presentation/widgets/video_screen.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import '../../../../core/presentation/color_manger/colors.dart';
 import '../../../../core/presentation/fonts_manger/fonts_manger.dart';
 import '../../../../core/presentation/style_manger/style_manger.dart';
 import '../../data/models/video_list_response.dart';
@@ -43,9 +41,11 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const HeaderWidget(),
+                        SizedBox(height: 20.h),
                         VideoScreen(
                           videoId: "${videoListItem?.id}",
                         ),
+                        SizedBox(height: 20.h),
                         Text(
                           "${videoListItem?.snippet?.title}",
                           style: getPoppinsStyle(

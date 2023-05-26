@@ -22,7 +22,7 @@ class VideoListDataSourcesImp implements VideoListDataSources {
       final VideoListResponse json = VideoListResponse.fromJson(response);
       return json;
     } on Exception catch (e) {
-      throw ServerException(message: "Server Exception: ${e.toString()}");
+      throw ServerException(message: e.toString());
     }
   }
 }
